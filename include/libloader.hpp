@@ -43,6 +43,29 @@ namespace libloader {
 #endif
         }
 
+        template<typename... Params>
+        bool call(const std::string& functionName, Params... params) const {
+#ifdef _WIN32
+            typedef void(CALLBACK* WINFUNC)(decltype(params)...);
+            if (!this->isLoaded())
+                return false;
+            if (auto func = reinterpret_cast<WINFUNC>(GetProcAddress(this->libraryHandle, functionName.c_str())))
+                (func)(params...);
+            else
+                return false;
+            return true;
+#endif
+#ifdef __unix__
+            dlerror(); // Clear existing errors
+            void(*UNIXFUNC)(decltype(params)...);
+            *(void**)(&UNIXFUNC) = dlsym(this->libraryHandle, functionName.c_str());
+            if (dlerror() != nullptr)
+                return false;
+            (*UNIXFUNC)(params...);
+            return true;
+#endif
+        }
+
         ~library();
     private:
         LIBLOADER_LIBRARY_HANDLE libraryHandle;

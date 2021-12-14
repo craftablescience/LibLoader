@@ -1,3 +1,6 @@
 #pragma once
 
-extern "C" int add(int a, int b);
+extern "C" {
+    int add(int a, int b);
+    void noReturn();
+}
