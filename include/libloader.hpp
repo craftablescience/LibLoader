@@ -3,8 +3,12 @@
 #include <string>
 
 #ifdef _WIN32
-#include <windows.h>
+#include <libloaderapi.h>
 #define LIBLOADER_LIBRARY_HANDLE HINSTANCE
+#endif
+#ifdef __unix__
+#include <dlfcn.h>
+#define LIBLOADER_LIBRARY_HANDLE void*
 #endif
 
 namespace libloader {
@@ -27,7 +31,13 @@ namespace libloader {
             return true;
 #endif
 #ifdef __unix__
-            // todo
+            dlerror(); // Clear existing errors
+            T(*UNIXFUNC)(decltype(params)...);
+            *(void**)(&UNIXFUNC) = dlsym(this->libraryHandle, functionName.c_str());
+            if (dlerror() != nullptr)
+                return false;
+            out = (*UNIXFUNC)(params...);
+            return true;
 #endif
         }
 

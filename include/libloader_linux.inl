@@ -1,11 +1,11 @@
 libloader::library::library(const std::string& path) {
-    // todo
+    this->libraryHandle = dlopen(path.c_str(), RTLD_LAZY);
 }
 
 bool libloader::library::isLoaded() const {
-    return this->libraryHandle;
+    return this->libraryHandle != nullptr;
 }
 
 libloader::library::~library() {
-    // todo
+    dlclose(this->libraryHandle);
 }
