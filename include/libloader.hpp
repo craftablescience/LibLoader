@@ -3,7 +3,7 @@
 #include <string>
 
 #ifdef _WIN32
-#include <libloaderapi.h>
+#include <windows.h>
 #define LIBLOADER_LIBRARY_HANDLE HINSTANCE
 #endif
 #ifdef __unix__
