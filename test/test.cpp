@@ -2,6 +2,9 @@
 #include <iostream>
 
 int main() {
+#ifdef _WIN32
+    auto lib = libloader::library("libtest_lib.dll");
+#endif
 #ifdef __unix__
     auto lib = libloader::library("libtest_lib.so");
 #endif
