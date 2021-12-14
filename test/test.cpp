@@ -3,10 +3,10 @@
 
 int main() {
 #ifdef _WIN32
-    auto lib = libloader::library("libtest_lib.dll");
+    auto lib = libloader::library("libtest_lib");
 #endif
 #ifdef __unix__
-    auto lib = libloader::library("libtest_lib.so");
+    auto lib = libloader::library("libtest_lib");
 #endif
     int result = 0;
     lib.call<int>("add", result, 2, 5);

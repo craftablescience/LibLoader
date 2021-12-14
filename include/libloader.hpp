@@ -5,16 +5,18 @@
 #ifdef _WIN32
 #include <windows.h>
 #define LIBLOADER_LIBRARY_HANDLE HINSTANCE
+#define LIBLOADER_DEFAULT_LIBRARY_FILE_TYPE ".dll"
 #endif
 #ifdef __unix__
 #include <dlfcn.h>
 #define LIBLOADER_LIBRARY_HANDLE void*
+#define LIBLOADER_DEFAULT_LIBRARY_FILE_TYPE ".so"
 #endif
 
 namespace libloader {
     class library {
     public:
-        explicit library(const std::string& path);
+        explicit library(const std::string& path, const std::string& extension = LIBLOADER_DEFAULT_LIBRARY_FILE_TYPE);
 
         [[nodiscard]] bool isLoaded() const;
 
