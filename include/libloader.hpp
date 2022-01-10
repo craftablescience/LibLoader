@@ -6,6 +6,7 @@
 #include <windows.h>
 #define LIBLOADER_LIBRARY_HANDLE HINSTANCE
 #define LIBLOADER_DEFAULT_LIBRARY_FILE_TYPE ".dll"
+#undef ERROR
 #endif
 #ifdef __unix__
 #include <dlfcn.h>
