@@ -45,7 +45,7 @@ namespace libloader {
         }
 
         template<typename... Params>
-        bool call(const std::string& functionName, Params... params) const {
+        bool callVoid(const std::string& functionName, Params... params) const {
 #ifdef _WIN32
             typedef void(CALLBACK* WINFUNC)(decltype(params)...);
             if (!this->isLoaded())
