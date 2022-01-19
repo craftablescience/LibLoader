@@ -24,7 +24,7 @@ namespace libloader {
         template<typename T, typename... Params>
         bool call(const std::string& functionName, T& out, Params... params) const {
 #ifdef _WIN32
-            typedef T(CALLBACK* WINFUNC)(decltype(params)...);
+            typedef T(__cdecl* WINFUNC)(decltype(params)...);
             if (!this->isLoaded())
                 return false;
             if (auto func = reinterpret_cast<WINFUNC>(GetProcAddress(this->libraryHandle, functionName.c_str())))
@@ -47,7 +47,7 @@ namespace libloader {
         template<typename... Params>
         bool callVoid(const std::string& functionName, Params... params) const {
 #ifdef _WIN32
-            typedef void(CALLBACK* WINFUNC)(decltype(params)...);
+            typedef void(__cdecl* WINFUNC)(decltype(params)...);
             if (!this->isLoaded())
                 return false;
             if (auto func = reinterpret_cast<WINFUNC>(GetProcAddress(this->libraryHandle, functionName.c_str())))
