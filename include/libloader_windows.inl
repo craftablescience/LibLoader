@@ -10,7 +10,7 @@ library::~library() {
 }
 
 template<typename T, typename... Params>
-bool library::call(const std::string &functionName, T &out, Params... params) const {
+bool library::call(const std::string& functionName, T& out, Params... params) const {
     typedef T(__cdecl* WINFUNC)(decltype(params)...);
     if (!this->isLoaded())
         return false;
@@ -22,7 +22,7 @@ bool library::call(const std::string &functionName, T &out, Params... params) co
 }
 
 template<typename... Params>
-bool library::callVoid(const std::string &functionName, Params... params) const {
+bool library::callVoid(const std::string& functionName, Params... params) const {
     typedef void(__cdecl* WINFUNC)(decltype(params)...);
     if (!this->isLoaded())
         return false;

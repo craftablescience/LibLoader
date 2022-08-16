@@ -10,7 +10,7 @@ library::~library() {
 }
 
 template<typename T, typename... Params>
-bool library::call(const std::string &functionName, T &out, Params... params) const {
+bool library::call(const std::string& functionName, T& out, Params... params) const {
     dlerror(); // Clear existing errors
     T(*APPLEFUNC)(decltype(params)...);
     *(void**)(&APPLEFUNC) = dlsym(this->libraryHandle, functionName.c_str());
@@ -21,7 +21,7 @@ bool library::call(const std::string &functionName, T &out, Params... params) co
 }
 
 template<typename... Params>
-bool library::callVoid(const std::string &functionName, Params... params) const {
+bool library::callVoid(const std::string& functionName, Params... params) const {
     dlerror(); // Clear existing errors
     void(*APPLEFUNC)(decltype(params)...);
     *(void**)(&APPLEFUNC) = dlsym(this->libraryHandle, functionName.c_str());
