@@ -8,13 +8,20 @@ int main() {
         lib = libloader::library("test_lib");
     }
 
-    int result = 0;
-    lib.call<int>("getValue", result);
+    int result = *lib.call<int>("getValue");
     std::cout << result << ' ';
-    lib.callVoid("noReturn");
-    lib.call<int>("getValue", result);
+    lib.call<void>("noReturn");
+    result = *lib.call<int>("getValue");
     std::cout << result << '\n';
 
-    lib.call<int>("add", result, 2, 5);
+    result = *lib.call<int>("add", 2, 5);
     std::cout << result << '\n';
+
+    auto noReturn = lib.get<void, "noReturn">();
+    auto getValue = lib.get<int, "getValue">();
+    noReturn();
+    std::cout << *getValue() << '\n';
+
+    auto add = lib.get<int, "add", int, int>();
+    std::cout << *add(13, 15) << '\n';
 }
