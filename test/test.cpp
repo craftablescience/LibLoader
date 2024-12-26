@@ -17,11 +17,11 @@ int main() {
     result = *lib.call<int>("add", 2, 5);
     std::cout << result << '\n';
 
-    auto noReturn = lib.get<void, "noReturn">();
-    auto getValue = lib.get<int, "getValue">();
+    auto noReturn = lib.get<void>("noReturn");
+    auto getValue = lib.get<int>("getValue");
     noReturn();
     std::cout << *getValue() << '\n';
 
-    auto add = lib.get<int, "add", int, int>();
+    auto add = lib.get<int, int, int>("add");
     std::cout << *add(13, 15) << '\n';
 }
